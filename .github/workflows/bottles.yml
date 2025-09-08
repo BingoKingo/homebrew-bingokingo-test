@@ -1,12 +1,12 @@
-name: brew bottles
+name: Brew Bottles
 
 on:
   workflow_dispatch:
     inputs:
       formulae:
-        description: 'Formulae to build'
+        description: "Formulae to build"
         required: true
-        default: ''
+        default: ""
         type: string
 
 jobs:
@@ -14,15 +14,16 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-22.04, macos-13, macos-14, macos-15]
-        # os: [ubuntu-22.04, macos-13, macos-14, macos-15, macos-sh, ubuntu-arm64-sh]
+        # os: [ubuntu-22.04, macos-13, macos-14, macos-15, macos-26, ubuntu-arm64-sh]
     runs-on: ${{ matrix.os }}
     permissions:
       actions: read
       checks: read
       contents: write
-      packages: write
+      packages: read
+      attestations: write
+      id-token: write
     steps:
-        
       - name: Set up Homebrew
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@main
@@ -59,7 +60,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: bottles_${{ matrix.os }}
-          path: '*.bottle.*'
+          path: "*.bottle.*"
 
   process-bottles:
     needs: bottles
@@ -69,6 +70,8 @@ jobs:
       checks: read
       contents: write
       packages: write
+      attestations: write
+      id-token: write
     steps:
       - name: Set up Homebrew
         id: set-up-homebrew
@@ -80,40 +83,40 @@ jobs:
         run: |
           echo "Checking if gh is already installed..."
           which gh || echo "gh not found in PATH"
-          
+
           echo "Ensuring gh is installed via Homebrew..."
           brew install gh || brew link --overwrite gh
-          
+
           echo "Verifying gh installation..."
           which gh
           gh --version
-          
+
       - name: Download workflow artifacts
         id: download-artifacts
         run: |
-          rm -rf bottles
-          mkdir -p bottles
-          cd bottles
-          artifact_ids=$(gh api repos/$GITHUB_REPOSITORY/actions/artifacts --jq '.artifacts[] | select(.name | startswith("bottles_")) | .id')
+          rm -rf "bottles"
+          mkdir -p "bottles"
+          cd "bottles"
+          artifact_ids="$(gh api repos/"$GITHUB_REPOSITORY"/actions/artifacts --jq '.artifacts[] | select(.name | startswith("bottles_")) | .id')"
           if [ -n "$artifact_ids" ]; then
             for artifact_id in $artifact_ids; do
               echo "Processing artifact ID: $artifact_id"
               (
-                curl -L -o artifact_${artifact_id}.zip \
+                curl -L -o "artifact_${artifact_id}.zip" \
                   -H "Authorization: token $GITHUB_TOKEN" \
                   -H "Accept: application/vnd.github+json" \
                   "https://api.github.com/repos/${GITHUB_REPOSITORY}/actions/artifacts/${artifact_id}/zip" && \
-                unzip -q artifact_${artifact_id}.zip && \
-                rm artifact_${artifact_id}.zip && \
+                unzip -q "artifact_${artifact_id}.zip" && \
+                rm "artifact_${artifact_id}.zip" && \
                 echo "Completed processing artifact ID: $artifact_id"
               ) &
             done
             wait
             echo "All artifacts processed"
-            echo "artifacts_found=true" >> $GITHUB_OUTPUT
+            echo "artifacts_found=true" >> "$GITHUB_OUTPUT"
           else
             echo "No bottle artifacts found"
-            echo "artifacts_found=false" >> $GITHUB_OUTPUT
+            echo "artifacts_found=false" >> "$GITHUB_OUTPUT"
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

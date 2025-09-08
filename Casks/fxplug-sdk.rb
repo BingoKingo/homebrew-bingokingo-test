@@ -13,12 +13,7 @@ cask "fxplug-sdk" do
 
   pkg "FxPlugSDK.pkg"
 
-  uninstall script:  {
-              executable: "uninstall.tool",
-              input:      ["Yes"],
-              sudo:       true,
-            },
-            pkgutil: "com.apple.pkg.FxPlugSDK"
+  uninstall pkgutil: "com.apple.pkg.FxPlugSDK"
 
   caveats do
     <<~EOS

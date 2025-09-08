@@ -1,6 +1,6 @@
 cask "soduto" do
-  version "2.0.3"
-  sha256 "d0e7350b14e87253f93be36b6a04ee80831d8636b60a74fbf1d6ac0e455a6392"
+  version "3.0.0"
+  sha256 "c05a022864138e88ca812b4be575aa70f65f92a595eb589a4606755d9e572f56"
 
   url "https://github.com/sannidhyaroy/Soduto/releases/download/v#{version}-nightly/Soduto.Nightly.dmg",
       verified: "github.com/sannidhyaroy/Soduto/"
@@ -8,14 +8,21 @@ cask "soduto" do
   desc "Communicate and share information between devices"
   homepage "https://soduto.thenoton.com/"
 
+  livecheck do
+    url :url
+    regex(/v?(\d+(?:\.\d+)+)-nightly/i)
+  end
+
+  auto_updates true
   depends_on arch: :arm64
+  depends_on macos: ">= :big_sur"
 
   app "Soduto.app"
 
   postflight do
     system_command "xattr",
                    args: [
-                     "-c", "#{appdir}/Soduto.app"
+                     "-dr", "com.apple.quarantine", "#{appdir}/Soduto.app"
                    ]
   end
 

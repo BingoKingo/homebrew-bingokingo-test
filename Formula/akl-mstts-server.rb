@@ -7,7 +7,7 @@ class AklMsttsServer < Formula
     skip
   end
 
-  deprecate! date: "2023-04-05", because: :discontinued
+  deprecate! date: "2023-04-05", because: :unmaintained
   if OS.mac?
     url "https://github.com/akl7777777/bob-plugin-akl-microsoft-free-tts/releases/download/v#{version}/mstts_server_MacOS"
     sha256 "6ac4563fd25d406616e22d2b5a54344dcc8d87afadbd473ec2db3a7417dcb167"

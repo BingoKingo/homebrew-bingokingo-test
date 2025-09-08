@@ -17,12 +17,7 @@ cask "advanced-video-quality-tool" do
 
   pkg "AVQT.pkg"
 
-  uninstall script:  {
-              executable: "uninstall.tool",
-              input:      ["Yes"],
-              sudo:       true,
-            },
-            pkgutil: "com.apple.pkg.AVQT"
+  uninstall pkgutil: "com.apple.pkg.AVQT"
 
   caveats do
     <<~EOS

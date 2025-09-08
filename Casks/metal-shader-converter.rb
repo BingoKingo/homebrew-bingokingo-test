@@ -1,6 +1,6 @@
 cask "metal-shader-converter" do
-  version "3.0_beta_1"
-  sha256 "a0982d1dde9ee3991b8a93ba9411990a8f4860b49ec42f0fb99f83a45b4a6b9a"
+  version "3.0_beta_5"
+  sha256 "ffe7f807f1399217767aa459df0bb144c52de6112f44c374699e99d6d93a5873"
 
   url "https://download.developer.apple.com/Developer_Tools/Metal_Shader_Converter_#{version}/Metal_Shader_Converter_#{version}.pkg",
       referer:    "https://developer.apple.com/",
@@ -13,12 +13,7 @@ cask "metal-shader-converter" do
 
   pkg "Metal_Shader_Converter_#{version}.pkg"
 
-  uninstall script:  {
-              executable: "uninstall.tool",
-              input:      ["Yes"],
-              sudo:       true,
-            },
-            pkgutil: "com.apple.metal"
+  uninstall pkgutil: "com.apple.metal"
 
   caveats do
     <<~EOS

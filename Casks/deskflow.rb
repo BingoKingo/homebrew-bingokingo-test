@@ -1,25 +1,38 @@
 cask "deskflow" do
   arch arm: "arm64", intel: "x86_64"
 
-  version "1.23.0"
-  sha256 arm:   "8fa595615d27bb71e4920ea3b4d4393ef7216cf488d6809e9f8ea87a1db1eab9",
-         intel: "6762377b1b3e8692cedda66bc0615e55f412b6d8f1af96e62793f9e8a8571071"
+  version "1.25.0"
+  sha256 arm:   "1ecd0b043049b89717b8650f1ac6cecd56b795df82a45efdfa617c565cfda2d8",
+         intel: "5396dfea389494089417003a0c6c237147a85107eb1db8faa18c849ec0e67fb6"
 
   url "https://github.com/deskflow/deskflow/releases/download/v#{version}/deskflow-#{version}-macos-#{arch}.dmg"
   name "Deskflow"
   desc "Mouse and keyboard sharing utility"
   homepage "https://github.com/deskflow/deskflow/"
 
-  depends_on macos: ">= :monterey"
+  conflicts_with cask: "deskflow@continuous"
+  depends_on macos: ">= :sonoma"
 
   app "Deskflow.app"
-  binary "#{appdir}/Deskflow.app/Contents/MacOS/deskflow-client"
-  binary "#{appdir}/Deskflow.app/Contents/MacOS/deskflow-server"
+  binary "#{appdir}/Deskflow.app/Contents/MacOS/deskflow-core"
+  binary "#{staged_path}/deskflow-client"
+  binary "#{staged_path}/deskflow-server"
+
+  preflight do
+    File.write "#{staged_path}/deskflow-client", <<~EOS
+      #!/bin/bash
+      exec '#{appdir}/Deskflow.app/Contents/MacOS/deskflow-core' "client" "$@"
+    EOS
+    File.write "#{staged_path}/deskflow-server", <<~EOS
+      #!/bin/bash
+      exec '#{appdir}/Deskflow.app/Contents/MacOS/deskflow-core' "server" "$@"
+    EOS
+  end
 
   postflight do
     system_command "xattr",
                    args: [
-                     "-c", "#{appdir}/Deskflow.app"
+                     "-dr", "com.apple.quarantine", "#{appdir}/Deskflow.app"
                    ]
   end
 
