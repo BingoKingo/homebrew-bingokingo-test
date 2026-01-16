@@ -1,6 +1,6 @@
 cask "font-kyobo-handwriting-2020-pdy" do
   version "1.000,20210106"
-  sha256 "b144bc49d528d35cde32c17ccd6fc785ca819d4081ceaac9433ee6e2bf1c5ea1"
+  sha256 :no_check
 
   url "https://store.kyobobook.co.kr/api/s3/download/hwrt-handwritingFont-font?fileName=KyoboHandwriting2020pdy.ttf"
   name "Kyobo Handwriting 2020 pdy"

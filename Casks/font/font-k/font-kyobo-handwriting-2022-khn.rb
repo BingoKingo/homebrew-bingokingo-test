@@ -1,6 +1,6 @@
 cask "font-kyobo-handwriting-2022-khn" do
   version "1.010,20230227"
-  sha256 "506320861fae6d16286fbceb8f0f48b254e89f3abf66ba5d52040b433c53b9f1"
+  sha256 :no_check
 
   url "https://store.kyobobook.co.kr/api/s3/download/hwrt-handwritingFont-font?fileName=KyoboHandwriting2022khn.ttf"
   name "Kyobo Handwriting 2022 khn"

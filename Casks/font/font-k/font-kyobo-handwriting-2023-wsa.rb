@@ -1,6 +1,6 @@
 cask "font-kyobo-handwriting-2023-wsa" do
   version "1.010,20240130"
-  sha256 "e62cf6ec56f327b9278f5aa885468a093dc16f72c588398779f0d76a985cd962"
+  sha256 :no_check
 
   url "https://store.kyobobook.co.kr/api/s3/download/hwrt-handwritingFont-font?fileName=KyoboHandwriting2023wsa.ttf"
   name "Kyobo Handwriting 2023 wsa"

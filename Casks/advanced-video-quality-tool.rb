@@ -1,6 +1,6 @@
 cask "advanced-video-quality-tool" do
   version "1.0"
-  sha256 "7634dadb5e6b6ff43ae5e6b5eb013ed940a0cd472466b73a9d5236182374ea23"
+  sha256 :no_check
 
   url "https://download.developer.apple.com/Developer_Tools/Advanced_Video_Quality_Tool/AdvancedVideoQualityTool.dmg",
       referer:    "https://developer.apple.com/",

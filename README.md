@@ -18,6 +18,12 @@ This repository may be rebased. If you encounter any issues, please try force re
 
 ## What is renamed/removed from this tap?
 
+**Formula** `adbfs-mac` was removed.
+
+**Formula** `akl-mstts-server` was removed.
+
+**Cask** `grizzly` was removed.
+
 **Cask** `font-candy-round-btn` was removed.
 
 **Cask** `font-courier-prime` was removed.

@@ -1,6 +1,6 @@
 cask "font-kyobo-handwriting-2021-sjy" do
   version "1.020,20220225"
-  sha256 "33373115ba59c9758f4c229741600ea84e2a058cafcebf176901decc0b6f083a"
+  sha256 :no_check
 
   url "https://store.kyobobook.co.kr/api/s3/download/hwrt-handwritingFont-font?fileName=KyoboHandwriting2021sjy.ttf"
   name "Kyobo Handwriting 2021 sjy"

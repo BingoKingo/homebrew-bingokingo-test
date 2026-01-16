@@ -1,6 +1,6 @@
 cask "font-kyobo-handwriting-2019" do
   version "1.000,20200217"
-  sha256 "92ed8baae0b00321994560281650f7a6ade89dcef6f8848fa511391720ce9aa5"
+  sha256 :no_check
 
   url "https://store.kyobobook.co.kr/api/s3/download/hwrt-handwritingFont-font?fileName=KyoboHandwriting2019.ttf"
   name "Kyobo Handwriting 2019"
